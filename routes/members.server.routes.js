@@ -10,8 +10,8 @@ module.exports = function(app){
   app.get('/memberlist', function(req, res) {
       res.render('memberlist',{} );
   });
-  app.get('/resultinput', function(req, res) {
-      res.render('resultinput',{} );
+  app.get('/scorelist', function(req, res) {
+      res.render('scorelist',{} );
   });
   app.post('/', function(req, res) {
       var req_msg = req.body.message;
