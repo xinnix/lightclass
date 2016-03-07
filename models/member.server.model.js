@@ -11,27 +11,14 @@ var MemberSchema = new Schema({
     type: String,
     required: true
   },
-  baby_birthday: Date,
-  isBoy: Boolean,  // sexual
-
+  gender: {
+    type:String
+  },  // sexual
   signup_time: {
     type: Date,
     default: Date.now
   },
-  valid_days: Number,
-  level: {  	// 会员类型 0,1,2
-    type: Number,
-    enum: [0, 1, 2]
-  },
-  parent_name: String,
-  address: String,
-  email: {
-    type: String,
-    match: /.+\@.+\..+/
-  } ,
-  weixin: String,
-  other: String,  // 备注
-  head_photo: String // 头像
+  school: String
 }, {
   collection: 'member'
 });

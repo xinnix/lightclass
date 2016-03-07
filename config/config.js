@@ -1,5 +1,5 @@
 module.exports = {
   port: process.env.PORT || 3000,
-  db: process.env.HBG_DEV_URI || 'mongodb://localhost/hbg',
+  db:'mongodb://localhost/lightclass',
   dbName: 'lightclass-dev'
 }

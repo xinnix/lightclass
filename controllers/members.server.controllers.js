@@ -11,8 +11,8 @@ var mongoose = require('mongoose'),
    * Create a Member
    */
   exports.create = function(req, res) {
-  	var member = new Member(req.body);
 
+		var member = new Member(req.body);
   	member.save(function(err,member) {
   		if (err) {
   			return res.status(400).send({
