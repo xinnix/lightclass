@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var swig = require('swig');
 var path = require('path');
-var route = require('../routes/members.server.routes');
+var memberRoute = require('../routes/members.server.routes');
+var examRoute = require('../routes/exams.server.routes');
 
 module.exports = function(){
   var app = express();
@@ -14,9 +15,10 @@ module.exports = function(){
 		extended: true
 	}));
   app.use(bodyParser.json());
+  app.use(express.static('./public'));
 
-  app.use(express.static('public'));
-  route(app);
+  memberRoute(app);
+  examRoute(app);
 
   return app;
 }

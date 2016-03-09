@@ -4,36 +4,33 @@
  */
 var mongoose = require('mongoose'),
 	// errorHandler = require('./errors.server.controller'),
-	Member = mongoose.model('Member'),
-	_ = require('lodash');
+	Exam = mongoose.model('Exam');
 
-  /**
-   * Create a Member
-   */
 	 exports.create = function(req, res) {
 
-		 var member = new Member(req.body);
-		 member.save(function(err,member) {
+		 var exam = new Exam(req.body);
+		 exam.save(function(err,exam) {
 			 if (err) {
 				 return res.status(400).send({
 					 message: err
 				 });
 			 } else {
-				 res.redirect('/memberlist');
+				 res.redirect('/examlist');
 			 }
 		 });
 	 }
 	exports.list = function(req, res) {
-		Member.find({})
+		Exam.find({})
 			.sort('-created')
 			//.populate('user', 'displayName')
-			.exec(function(err, members) {
+			.exec(function(err, exams) {
 			if (err) {
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				res.render('memberlist',{members:members});
+        console.log(exams);
+				res.render('examlist',{exams:exams});
 			}
 		});
 	};

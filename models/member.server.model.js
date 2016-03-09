@@ -18,7 +18,10 @@ var MemberSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  school: String
+  school:{
+    type:String,
+
+  }
 }, {
   collection: 'member'
 });

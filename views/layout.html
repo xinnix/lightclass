@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="./style/main.css">
-
+    <link rel="stylesheet" href="./style/bootstrap-datetimepicker.min.css" >
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap-datetimepicker.min.js"></script>
     <title>{{title}}</title>
   </head>
   <body>
@@ -34,9 +37,14 @@
     <div class="row">
       <div class="col-sm-3 col-md-2 sidebar">
         <ul class="nav nav-sidebar">
-          <li class="active"><a href="#">功能列表 <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="#">学生管理 <span class="sr-only">(current)</span></a></li>
           <li><a href="/signup">学生信息录入</a></li>
           <li><a href="/memberlist">学生信息查询</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li class="active"><a href="#">考试管理 <span class="sr-only">(current)</span></a></li>
+          <li><a href="/examcreate">考试创建</a></li>
+          <li><a href="/examlist">考试浏览</a></li>
         </ul>
       </div>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -50,12 +58,11 @@
 
 
 </div>
-<footer class="footer">
+<!-- <footer class="footer">
   <div class="container">
     <p class="text-muted">轻课版权信息2016</p>
   </div>
-</footer>
-    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</footer> -->
+
   </body>
 </html>
