@@ -8,8 +8,8 @@
     <title>{{title}}</title>
   </head>
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top ">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -28,18 +28,33 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
-    
-      {% block content %}{% endblock %}
+<div class="container-fluid">
 
 
-
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">轻课版权信息2016</p>
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <li class="active"><a href="#">功能列表 <span class="sr-only">(current)</span></a></li>
+          <li><a href="/signup">学生信息录入</a></li>
+          <li><a href="/memberlist">学生信息查询</a></li>
+        </ul>
       </div>
-    </footer>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          {% block content %}{% endblock %}
+      </div>
+    </div>
 
+
+
+
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">轻课版权信息2016</p>
+  </div>
+</footer>
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </body>
