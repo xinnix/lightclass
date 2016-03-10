@@ -5,6 +5,8 @@ var path = require('path');
 var memberRoute = require('../routes/members.server.routes');
 var examRoute = require('../routes/exams.server.routes');
 var lclassRoute = require('../routes/lclasses.server.routes');
+var markRoute = require('../routes/marks.server.routes');
+
 
 module.exports = function(){
   var app = express();
@@ -21,5 +23,7 @@ module.exports = function(){
   memberRoute(app);
   examRoute(app);
   lclassRoute(app);
+  markRoute(app);
+
   return app;
 }

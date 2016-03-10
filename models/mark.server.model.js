@@ -15,10 +15,10 @@ var MarkSchema = new Schema({
   },
   mark:{
     type:String,
-  }
+  },
   memo:{
     type:String,
-  }
+  },
   date: {
     type: Date,
     default: Date.now

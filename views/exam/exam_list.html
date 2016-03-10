@@ -22,7 +22,7 @@
                   <td>{{exam.exam_memo}}</td>
                   <td>{{exam.exam_lclass.lclass_name}}</td>
                   <td>{{exam.exam_date|date('Y-m-d')}}</td>
-                  <td><button class="btn btn-primary">登分</button></td>
+                  <td><a class="btn btn-primary" href="/markcreate/{{exam._id.toString()}}">登分</a></td>
                 </tr>
                 {% endfor %}
               </tbody>
