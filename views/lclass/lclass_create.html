@@ -1,0 +1,19 @@
+{% extends '../layout.html' %}
+
+{% block content %}
+
+<div class="container">
+  <h1>创建班级</h1>
+  <form action="lclasscreate" method="post">
+    <div class="form-group">
+      <label for="lclass_name">班级名</label>
+      <input type="text" class="form-control" id="lclass_name" name="lclass_name" placeholder="请输入班级名">
+    </div>
+    <div class="form-group">
+      <label for="lclass_memo">内容介绍</label>
+      <input type="text" class="form-control" id="lclass_memo" name="lclass_memo" placeholder="输入关于班级的备注信息">
+    </div>
+    <button type="submit" class="btn btn-default">创建</button>
+  </form>
+</div>
+{% endblock %}

@@ -4,6 +4,7 @@ var swig = require('swig');
 var path = require('path');
 var memberRoute = require('../routes/members.server.routes');
 var examRoute = require('../routes/exams.server.routes');
+var lclassRoute = require('../routes/lclasses.server.routes');
 
 module.exports = function(){
   var app = express();
@@ -19,6 +20,6 @@ module.exports = function(){
 
   memberRoute(app);
   examRoute(app);
-
+  lclassRoute(app);
   return app;
 }

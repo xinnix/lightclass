@@ -13,7 +13,12 @@ var MemberSchema = new Schema({
   },
   gender: {
     type:String
-  },  // sexual
+  },
+  lclass: {
+    type: Schema.ObjectId,
+    ref: 'Lclass',
+    required: true
+  },
   signup_time: {
     type: Date,
     default: Date.now

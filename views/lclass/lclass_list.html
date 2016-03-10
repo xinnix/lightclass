@@ -1,26 +1,22 @@
-{% extends 'layout.html' %}
+{% extends '../layout.html' %}
 
 {% block content %}
 
     <div class="container">
-    <h1>考试列表</h1>
+    <h1>班级列表</h1>
     <div class="table-responsive">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>考试主题</th>
+                  <th>班级名</th>
                   <th>备注</th>
-                  <th>考试时间</th>
-                  <th>登分</th>
                 </tr>
               </thead>
               <tbody >
-                {% for exam in exams %}
+                {% for lclass in lclasses %}
                 <tr>
-                  <td>{{exam.exam_title}}</td>
-                  <td>{{exam.exam_memo}}</td>
-                  <td>{{exam.exam_date|date('Y-m-d')}}</td>
-                  <td><button class="btn btn-primary">登分</button></td>
+                  <td>{{lclass.lclass_name}}</td>
+                  <td>{{lclass.lclass_memo}}</td>
                 </tr>
                 {% endfor %}
               </tbody>

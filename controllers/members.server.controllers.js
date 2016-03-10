@@ -4,8 +4,11 @@
  */
 var mongoose = require('mongoose'),
 	// errorHandler = require('./errors.server.controller'),
+	Lclass = mongoose.model('Lclass'),
 	Member = mongoose.model('Member'),
 	_ = require('lodash');
+		// errorHandler = require('./errors.server.controller'),
+
 
   /**
    * Create a Member
@@ -26,14 +29,30 @@ var mongoose = require('mongoose'),
 	exports.list = function(req, res) {
 		Member.find({})
 			.sort('-created')
-			//.populate('user', 'displayName')
+			.populate('lclass')
 			.exec(function(err, members) {
 			if (err) {
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				res.render('memberlist',{members:members});
+				res.render('member/member_list',{members:members});
 			}
 		});
 	};
+	exports.signupInit = function(req,res){
+		Lclass.find({})
+      .sort('-created')
+      //.populate('user', 'displayName')
+      .exec(function(err, lclasses) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+				console.log(lclasses);
+        res.render('member/member_create',{lclasses:lclasses});
+      }
+    });
+
+	}

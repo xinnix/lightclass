@@ -3,6 +3,7 @@ var config = require('./config/config');
 var mongoose = require('mongoose');
 require('./models/member.server.model');
 require('./models/exam.server.model');
+require('./models/lclass.server.model');
 
 var app = require('./config/express')();
 var chalk = require('chalk');
