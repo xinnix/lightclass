@@ -19,7 +19,7 @@ var mongoose = require('mongoose'),
 			 }
 		 });
 	}
-	exports.list = function(req, res) {
+	exports.list = function(req, res, next) {
 		Lclass.find({})
 			.sort('-created')
 			//.populate('user', 'displayName')
@@ -29,7 +29,9 @@ var mongoose = require('mongoose'),
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				res.render('lclass/lclass_list',{lclasses:lclasses});
+				req.lclasses = lclasses;
+				next();
+				// res.render('lclass/lclass_list',{lclasses:lclasses});
 			}
 		});
 	};

@@ -40,19 +40,20 @@ var mongoose = require('mongoose'),
 			}
 		});
 	};
-	exports.signupInit = function(req,res){
-		Lclass.find({})
-      .sort('-created')
-      //.populate('user', 'displayName')
-      .exec(function(err, lclasses) {
-      if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-				console.log(lclasses);
-        res.render('member/member_create',{lclasses:lclasses});
-      }
-    });
-
-	}
+	// exports.signupInit = function(req,res，next){
+	// 	Lclass.find({})
+  //     .sort('-created')
+  //     //.populate('user', 'displayName')
+  //     .exec(function(err, lclasses) {
+  //     if (err) {
+  //       return res.status(400).send({
+  //         message: errorHandler.getErrorMessage(err)
+  //       });
+  //     } else {
+	// 			req.classes = lclasses;
+	// 			next();
+  //       res.render('member/member_create',{lclasses:lclasses});
+  //     }
+  //   });
+	//
+	// }

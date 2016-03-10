@@ -10,6 +10,11 @@ var ExamSchema = new Schema({
   exam_memo: {
     type: String,
   },
+  exam_lclass:{
+    type: Schema.ObjectId,
+    ref: 'Lclass',
+    required: true
+  },
   exam_date: {
     type: Date,
     default: Date.now

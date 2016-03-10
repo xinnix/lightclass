@@ -5,6 +5,8 @@ module.exports = function(app){
       res.render('lclass/lclass_create',{} );
   }).post('/lclasscreate',lclass.create);
 
-  app.get('/lclasslist',lclass.list);
+  app.get('/lclasslist',lclass.list,function(req,res){
+    res.render('lclass/lclass_list',{lclasses:req.lclasses});
+  });
 
 }

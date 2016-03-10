@@ -22,14 +22,13 @@ var mongoose = require('mongoose'),
 	exports.list = function(req, res) {
 		Exam.find({})
 			.sort('-created')
-			//.populate('user', 'displayName')
+			.populate('exam_lclass')
 			.exec(function(err, exams) {
 			if (err) {
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-        console.log(exams);
 				res.render('exam/exam_list',{exams:exams});
 			}
 		});

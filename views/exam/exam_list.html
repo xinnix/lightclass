@@ -10,6 +10,7 @@
                 <tr>
                   <th>考试主题</th>
                   <th>备注</th>
+                  <th>考试班级</th>
                   <th>考试时间</th>
                   <th>登分</th>
                 </tr>
@@ -19,6 +20,7 @@
                 <tr>
                   <td>{{exam.exam_title}}</td>
                   <td>{{exam.exam_memo}}</td>
+                  <td>{{exam.exam_lclass.lclass_name}}</td>
                   <td>{{exam.exam_date|date('Y-m-d')}}</td>
                   <td><button class="btn btn-primary">登分</button></td>
                 </tr>
