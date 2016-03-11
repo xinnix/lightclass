@@ -19,8 +19,9 @@
               <tbody >
                 {% for member in members %}
                 <tr>
-                  <td>member.student_name</td>
-                  <td>member.lclass.lclass_name</td>
+                  <td>{{member.student_name}}</td>
+                  <td>{{exam.title}}</td>
+                  <td>{{member.lclass.lclass_name}}</td>
                   <td><input type="text" class="form-control" id="mark" name="mark" placeholder="成绩"></td>
                   <td><input type="text" class="form-control" id="memo" name="memo" placeholder="建议"></td>
                 </tr>
@@ -30,7 +31,7 @@
             </table>
           </div>
 
-<button type="submit" class="btn btn-default">注册</button>
+<button type="submit" class="btn btn-default">确定</button>
 </form>
 </div>
 

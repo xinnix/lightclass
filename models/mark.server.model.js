@@ -14,7 +14,7 @@ var MarkSchema = new Schema({
     required: true
   },
   mark:{
-    type:String,
+    type:Number,
   },
   memo:{
     type:String,

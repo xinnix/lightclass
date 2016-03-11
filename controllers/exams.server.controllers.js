@@ -4,7 +4,9 @@
  */
 var mongoose = require('mongoose'),
 	// errorHandler = require('./errors.server.controller'),
-	Exam = mongoose.model('Exam');
+	Exam = mongoose.model('Exam'),
+	Member = mongoose.model('Member'),
+	Mark = mongoose.model('Mark');
 
 	 exports.create = function(req, res) {
 
@@ -15,6 +17,8 @@ var mongoose = require('mongoose'),
 					 message: err
 				 });
 			 } else {
+
+
 				 res.redirect('/examlist');
 			 }
 		 });

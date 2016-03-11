@@ -45,7 +45,8 @@ var mongoose = require('mongoose'),
 		Exam.findOne({_id:examId})
 		.populate('exam_lclass')
 		.exec(function(err,exam){
-			Member.find({_id:exam.exam_lclass._id})
+			req.exam = exam;
+			Member.find({lclass:exam.exam_lclass})
 			.populate('lclass')
 			.exec(function(err,members){
 				if (err) {
@@ -53,6 +54,7 @@ var mongoose = require('mongoose'),
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					console.log(members);
 					req.members = members;
 					next();
 					// res.render('mark/mark_list',{markes:markes});
