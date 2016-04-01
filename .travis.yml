@@ -1,0 +1,5 @@
+language: node_js
+node_js:
+  - "5.7"
+notifications:
+  webhooks: https://hook.bearychat.com/=bw8jI/travis/06c5dbd9dfbdedc414f06c41e3632af9
