@@ -1,29 +1,22 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var swig = require('swig');
-var path = require('path');
-var memberRoute = require('../routes/members.server.routes');
-var examRoute = require('../routes/exams.server.routes');
-var lclassRoute = require('../routes/lclasses.server.routes');
-var markRoute = require('../routes/marks.server.routes');
+const express = require('express');
+const bodyParser = require('body-parser');
+const swig = require('swig');
+import studentRoute from '../routes/student.server.routes';
 
 
-module.exports = function(){
-  var app = express();
+export default () => {
+  const app = express();
   app.engine('html', swig.renderFile);
   app.set('view engine', 'html');
   app.set('views', './views');
 
   app.use(bodyParser.urlencoded({
-		extended: true
-	}));
+    extended: true,
+  }));
   app.use(bodyParser.json());
   app.use(express.static('./public'));
 
-  memberRoute(app);
-  examRoute(app);
-  lclassRoute(app);
-  markRoute(app);
+  app.use('/students', studentRoute);
 
   return app;
-}
+};
