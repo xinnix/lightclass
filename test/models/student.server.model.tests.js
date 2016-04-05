@@ -32,7 +32,7 @@ describe('Student Model Unit Tests:', function () {
     });
     done();
   });
-  
+
   it('should be able to save without problems', done => {
     this.timeout(10000);
     return student.save(err => {
@@ -42,6 +42,7 @@ describe('Student Model Unit Tests:', function () {
   });
 
   it('should be able to show an error when try to save group with num', done =>{
+    this.timeout(10000);
     student.group = 123;
     return student.save(function (err) {
       should.exist(err);
