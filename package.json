@@ -4,7 +4,7 @@
   "description": "joy and will online",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha  --compilers js:babel-core/register --require ./test/testHelper.js 'test/**/*.@(js)'",
+    "test": "./node_modules/mocha/bin/mocha  -t 10000 --compilers js:babel-core/register --require ./test/testHelper.js 'test/**/*.@(js)'",
     "test-gulp": "./node_modules/gulp/bin/gulp.js mocha"
   },
   "author": "",
