@@ -60,6 +60,52 @@ describe('Student Controller Unit Tests:', function () {
       });
     });
   });
+  it('should be able to update student', done => {
+    this.timeout(10000);
+    agent.post('/students')
+    .send(student)
+    .expect(200)
+    .end((studentSaveErr, studentSaveRes) => {
+      if (studentSaveErr) {
+        return done(studentSaveErr);
+      }
+      student.address = '王曲';
+      agent.put('/students/'+studentSaveRes.body._id)
+      .send(student)
+      .expect(200)
+      .end((studentUpdateErr, studentUpdateRes) => {
+        if (studentUpdateErr) {
+          return done(studentUpdateErr);
+        }
+        (studentUpdateRes.body.student_id).should.equal(student.student_id);
+        (studentUpdateRes.body.address).should.match('王曲');
+        done();
+      });
+
+    });
+  });
+  it('should be able to delete student', done => {
+    this.timeout(10000);
+    agent.post('/students')
+    .send(student)
+    .expect(200)
+    .end((studentSaveErr, studentSaveRes) => {
+      if (studentSaveErr) {
+        return done(studentSaveErr);
+      }
+      agent.delete('/students/'+studentSaveRes.body._id)
+      .send(student)
+      .expect(200)
+      .end((studentDeleteErr, studentDeleteRes) => {
+        if (studentDeleteErr) {
+          return done(studentDeleteErr);
+        }
+        (studentDeleteRes.body._id).should.equal(studentSaveRes.body._id);
+        done();
+      });
+
+    });
+  });
 
 
   afterEach(function (done) {

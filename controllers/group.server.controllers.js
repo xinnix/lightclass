@@ -1,83 +1,83 @@
 import { getErrorMessage } from './core/errors.server.controllers';
 import _ from 'lodash';
 const mongoose = require('mongoose');
-const Student = mongoose.model('Student');
+const Group = mongoose.model('Group');
 
 
 export function create(req, res) {
-  const student = new Student(req.body);
-  student.save((err) => {
+  const group = new Group(req.body);
+  group.save((err) => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.jsonp(student);
+      res.jsonp(group);
     }
   });
 }
 export function list(req, res) {
-  Student.find({})
+  Group.find({})
   .sort('-created')
-  .exec((err, students) => {
+  .exec((err, groups) => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.jsonp(students);
+      res.jsonp(groups);
       // res.render('lclass/lclass_list',{lclasses:lclasses});
     }
   });
 }
 export function read(req, res) {
   // convert mongoose document to JSON
-  const student = req.student ? req.student.toJSON() : {};
-  res.json(student);
+  const group = req.group ? req.group.toJSON() : {};
+  res.json(group);
 }
 
 export function del(req, res) {
-  const student = req.student;
+  const group = req.group;
 
-  student.remove(err => {
+  group.remove(err => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.json(student);
+      res.json(group);
     }
   });
 }
 
 export function update(req, res) {
-  let student = req.student;
-  student = _.extend(student,req.body);
-  student.save(err => {
+  let group = req.group;
+  group = _.extend(group,req.body);
+  group.save(err => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.json(student);
+      res.json(group);
     }
   });
 }
-export function studentByID(req, res, next, id) {
+export function groupByID(req, res, next, id) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     res.status(400).send({
-      message: 'Studentid is invalid',
+      message: 'Groupid is invalid',
     });
   }
-  Student.findById(id).exec((err, student) => {
+  Group.findById(id).exec((err, group) => {
     if (err) {
       next(err);
-    } else if (!student) {
+    } else if (!group) {
       res.status(404).send({
-        message: 'No student with that identifier has been found',
+        message: 'No article with that identifier has been found',
       });
     }
-    req.student = student; //eslint-disable-line
+    req.group = group; //eslint-disable-line
     next();
   });
 }
