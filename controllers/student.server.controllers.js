@@ -2,6 +2,7 @@ import { getErrorMessage } from './core/errors.server.controllers';
 import _ from 'lodash';
 const mongoose = require('mongoose');
 const Student = mongoose.model('Student');
+const Group = mongoose.model('Group');
 
 
 export function create(req, res) {
@@ -19,6 +20,7 @@ export function create(req, res) {
 export function list(req, res) {
   Student.find({})
   .sort('-created')
+  .populate('group')
   .exec((err, students) => {
     if (err) {
       res.status(400).send({

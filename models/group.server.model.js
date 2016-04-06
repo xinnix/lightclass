@@ -10,9 +10,5 @@ const GroupSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  students: [{
-    type: Schema.ObjectId,
-    ref: 'Student ',
-  }],
 });
 mongoose.model('Group', GroupSchema);

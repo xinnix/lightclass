@@ -30,39 +30,20 @@ describe('Group Controller Unit Tests:', function () {
   })
 
   beforeEach(done => {
-    student1 = new Student({
-      student_id: '10000',
-      name: 'full name',
-      gender: 'male',
-      grade: '初三',
-      school: '西工大',
-      phone: '15349216763',
-      birthday: Date.now(),
-      address: '长安中路',
-      password: 'tj',
-    });
-    student2 = new Student({
-      student_id: '10001',
-      name: 'full name2',
-      gender: 'male',
-      grade: '初三',
-      school: '高新',
-      phone: '15349216763',
-      birthday: Date.now(),
-      address: '王曲',
-      password: 'tj',
-    });
-    group = new Group({
+
+    group = {
       name: '初三1班',
       type: '12人班',
       master: 'TJ',
-      students:[student1,student2],
-    })
+    };
+
+
+
     done();
   });
 
 
-  it('should be able to save group with 2 students', done => {
+  it('should be able to save group', done => {
     this.timeout(10000);
     agent.post('/groups')
     .send(group)
@@ -75,7 +56,6 @@ describe('Group Controller Unit Tests:', function () {
       .expect(200)
       .end((groupGetErr, groupGetRes) => {
         const groups = groupGetRes.body;
-        (groups[0].students).should.be.instanceof(Array).and.have.lengthOf(2);
         (groups[0].name).should.match('初三1班');
         done();
       });

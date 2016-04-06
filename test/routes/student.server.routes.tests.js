@@ -5,6 +5,8 @@ const should = require('should');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const Student = mongoose.model('Student');
+const Group = mongoose.model('Group');
+
 import express from '../../config/express';
 
 
@@ -14,6 +16,8 @@ import express from '../../config/express';
 let app;
 let agent;
 let student;
+let group;
+
 /**
  * Unit tests
  */
@@ -26,7 +30,13 @@ describe('Student Controller Unit Tests:', function () {
   })
 
   beforeEach(done => {
-    student = new Student({
+
+    group = new Group({
+      name: '初三1班',
+      type: '12人班',
+      master: 'TJ',
+    })
+    student = {
       student_id: '10000',
       name: 'full name',
       gender: 'male',
@@ -36,27 +46,32 @@ describe('Student Controller Unit Tests:', function () {
       birthday: Date.now(),
       address: '长安中路',
       password: 'tj',
-    });
+    };
     done();
   });
 
 
   it('should be able to save student', done => {
-    this.timeout(10000);
-    agent.post('/students')
-    .send(student)
-    .expect(200)
-    .end((studentSaveErr, studentSaveRes) => {
-      if (studentSaveErr) {
-        return done(studentSaveErr);
-      }
-      agent.get('/students')
+    this.timeout(20000);
+    group.save((err,group)=>{
+      student.group = group
+      agent.post('/students')
+      .send(student)
       .expect(200)
-      .end((studentGetErr, studentGetRes) => {
-        const students = studentGetRes.body;
-        (students[0].student_id).should.equal(student.student_id);
-        (students[0].name).should.match('full name');
-        done();
+      .end((studentSaveErr, studentSaveRes) => {
+        if (studentSaveErr) {
+          return done(studentSaveErr);
+        }
+        agent.get('/students')
+        .expect(200)
+        .end((studentGetErr, studentGetRes) => {
+          const students = studentGetRes.body;
+          (students[0].student_id).should.equal(student.student_id);
+          (students[0].name).should.match('full name');
+          (students[0].group.name).should.match('初三1班');
+
+          done();
+        });
       });
     });
   });
@@ -109,6 +124,7 @@ describe('Student Controller Unit Tests:', function () {
 
 
   afterEach(function (done) {
-    Student.remove().exec(done);
+    Student.remove().exec();
+    Group.remove().exec(done);
   });
 });

@@ -2,7 +2,6 @@
 /**
  * Module dependencies.
  */
-require('../../models/student.server.model');
 
 const should = require('should');
 const mongoose = require('mongoose');

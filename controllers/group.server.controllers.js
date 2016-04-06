@@ -2,6 +2,7 @@ import { getErrorMessage } from './core/errors.server.controllers';
 import _ from 'lodash';
 const mongoose = require('mongoose');
 const Group = mongoose.model('Group');
+const Student = mongoose.model('Student');
 
 
 export function create(req, res) {
@@ -19,6 +20,7 @@ export function create(req, res) {
 export function list(req, res) {
   Group.find({})
   .sort('-created')
+  .populate('students')
   .exec((err, groups) => {
     if (err) {
       res.status(400).send({
@@ -26,7 +28,6 @@ export function list(req, res) {
       });
     } else {
       res.jsonp(groups);
-      // res.render('lclass/lclass_list',{lclasses:lclasses});
     }
   });
 }
@@ -69,7 +70,8 @@ export function groupByID(req, res, next, id) {
       message: 'Groupid is invalid',
     });
   }
-  Group.findById(id).exec((err, group) => {
+  Group.findById(id)
+  .exec((err, group) => {
     if (err) {
       next(err);
     } else if (!group) {
