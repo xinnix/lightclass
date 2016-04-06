@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 const swig = require('swig');
 import studentRoute from '../routes/student.server.routes';
 import groupRoute from '../routes/group.server.routes';
-
-
+import lessonModuleRoute from '../routes/lessonModule.server.routes';
 
 export default () => {
   const app = express();
@@ -20,6 +19,7 @@ export default () => {
 
   app.use('/students', studentRoute);
   app.use('/groups', groupRoute);
+  app.use('/lessonModules', lessonModuleRoute);
 
   return app;
 };

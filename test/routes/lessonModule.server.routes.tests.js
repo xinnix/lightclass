@@ -4,7 +4,7 @@
 const should = require('should');
 const request = require('supertest');
 const mongoose = require('mongoose');
-const Group = mongoose.model('Group');
+const LessonModule = mongoose.model('LessonModule');
 
 import express from '../../config/express';
 
@@ -14,12 +14,12 @@ import express from '../../config/express';
  */
 let app;
 let agent;
-let group;
+let lessonModule;
 /**
  * Unit tests
  */
  /*eslint-disable*/
-describe('Group Controller Unit Tests:', function () {
+describe('LessonModule Controller Unit Tests:', function () {
 
   before(done => {
     app = express();
@@ -29,10 +29,14 @@ describe('Group Controller Unit Tests:', function () {
 
   beforeEach(done => {
 
-    group = {
-      name: '初三1班',
-      type: '12人班',
-      master: 'TJ',
+    lessonModule = {
+      name: 'Tj',
+      period: 'Tj',
+      textbook: 'Tj',
+      exercise: 'Tj',
+      test: 'Tj',
+      homework: Date.now(),
+      memo: 'Tj',
     };
 
 
@@ -41,20 +45,20 @@ describe('Group Controller Unit Tests:', function () {
   });
 
 
-  it('should be able to save group', done => {
+  it('should be able to save LessonModule', done => {
     this.timeout(10000);
-    agent.post('/groups')
-    .send(group)
+    agent.post('/LessonModules')
+    .send(lessonModule)
     .expect(200)
-    .end((groupSaveErr, groupSaveRes) => {
-      if (groupSaveErr) {
-        return done(groupSaveErr);
+    .end((LessonModuleSaveErr, LessonModuleSaveRes) => {
+      if (LessonModuleSaveErr) {
+        return done(LessonModuleSaveErr);
       }
-      agent.get('/groups')
+      agent.get('/LessonModules')
       .expect(200)
-      .end((groupGetErr, groupGetRes) => {
-        const groups = groupGetRes.body;
-        (groups[0].name).should.match('初三1班');
+      .end((LessonModuleGetErr, LessonModuleGetRes) => {
+        const LessonModules = LessonModuleGetRes.body;
+        (LessonModules[0].name).should.match('Tj');
         done();
       });
     });
@@ -108,7 +112,7 @@ describe('Group Controller Unit Tests:', function () {
   //
 
   afterEach(function (done) {
-    Group.remove().exec(done);
+    LessonModule.remove().exec(done);
   });
 });
 /*eslint-enable*/
