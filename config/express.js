@@ -4,6 +4,7 @@ const swig = require('swig');
 import studentRoute from '../routes/student.server.routes';
 import groupRoute from '../routes/group.server.routes';
 import lessonModuleRoute from '../routes/lessonModule.server.routes';
+import courseRoute from '../routes/course.server.routes';
 
 export default () => {
   const app = express();
@@ -20,6 +21,7 @@ export default () => {
   app.use('/students', studentRoute);
   app.use('/groups', groupRoute);
   app.use('/lessonModules', lessonModuleRoute);
+  app.use('/courses', courseRoute);
 
   return app;
 };
