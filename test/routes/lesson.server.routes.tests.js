@@ -6,6 +6,8 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const Course = mongoose.model('Course');
 const LessonModule = mongoose.model('LessonModule');
+const Lesson = mongoose.model('Lesson');
+const Group = mongoose.model('Group');
 
 import express from '../../config/express';
 
@@ -15,14 +17,16 @@ import express from '../../config/express';
  */
 let app;
 let agent;
+let group;
 let course;
 let lessonModule1;
 let lessonModule2;
+let lesson;
 /**
  * Unit tests
  */
  /*eslint-disable*/
-describe('Course Controller Unit Tests:', function () {
+describe('Lesson Controller Unit Tests:', function () {
 
   before(done => {
     app = express();
@@ -31,12 +35,12 @@ describe('Course Controller Unit Tests:', function () {
   })
 
   beforeEach(done => {
-    course = {
+    course = new Course({
       name: '春季课程',
       lesson_modules: [],
       period: '春季',
       memo: '挺好的课',
-    };
+    });
     lessonModule1 = new LessonModule({
       name: 'Tj',
       period: 'Tj',
@@ -55,32 +59,66 @@ describe('Course Controller Unit Tests:', function () {
       homework: Date.now(),
       memo: 'Tj1',
     });
+    group = new Group({
+      name: '初三1班',
+      type: '12人班',
+      master: 'TJ',
+    });
+    lesson = {
+      date: new Date(2006,0,12),
+      process: '未开始',
+    }
+    // lessonModule1.save(err => {
+    //   lessonModule2.save(err => {
+    //     course.lesson_modules.push(lessonModule1);
+    //     course.lesson_modules.push(lessonModule2);
+    //     course.save((err)=>{
+    //         if(err){
+    //           done(err);
+    //         }
+    //         done();
+    //     });
+    //   });
+    // });
+lessonModule1.save()
+.then(doc =>{
+  lessonModule2.save();
+}).then(doc =>{
+  course.lesson_modules.push(lessonModule1);
+  course.lesson_modules.push(lessonModule2);
+  course.save();
+}).then(doc=>{
+  group.course = course;
+  group.save()
+}).then(doc =>{
+  done()
+}).catch(err=>{
+  done(err)
+})
 
-    lessonModule1.save(err => {
-      lessonModule2.save(err => {
-        done();
-      })
-    })
+
 
   });
 
 
-  it('should be able to save couse with 2 lessonModule', done => {
+  it('should be able to produce lessons with group', done => {
     this.timeout(10000);
-    course.lesson_modules.push(lessonModule1);
-    course.lesson_modules.push(lessonModule2);
-    agent.post('/courses')
-    .send(course)
+    lesson.group = group;
+    lesson.lesson_module = group.course.lesson_modules[0];
+    // console.log(lesson);
+    agent.post('/lessons')
+    .send(lesson)
     .expect(200)
-    .end((courseSaveErr, courseSaveRes) => {
-      if (courseSaveErr) {
-        return done(courseSaveErr);
+    .end((lessonSaveErr, lessonSaveRes) => {
+      if (lessonSaveErr) {
+        return done(lessonSaveErr);
       }
-      agent.get('/courses')
+      agent.get('/lessons')
       .expect(200)
-      .end((courseGetErr, courseGetRes) => {
-        const courses = courseGetRes.body;
-        (courses[0].lesson_modules[0].name).should.match('Tj');
+      .end((lessonGetErr, lessonGetRes) => {
+        const lessons = lessonGetRes.body;
+        (lessons[0].lesson_module.name).should.match('Tj');
+        (lessons[0].group.name).should.match('初三1班');
         done();
       });
     });
@@ -134,8 +172,10 @@ describe('Course Controller Unit Tests:', function () {
   //
 
   afterEach(function (done) {
+    Group.remove().exec();
     LessonModule.remove().exec();
-    Course.remove().exec(done);
+    Course.remove().exec();
+    Lesson.remove().exec(done);
   });
 });
 /*eslint-enable*/

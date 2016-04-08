@@ -11,7 +11,7 @@ const LessonSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'LessonModule',
   },
-  date: String,
+  date: Date,
   process: String,
   feedbacks: [{
     type: Schema.ObjectId,

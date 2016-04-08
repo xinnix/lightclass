@@ -17,7 +17,7 @@ let app;
 let agent;
 let student;
 let group;
-
+/*eslint-disable*/
 /**
  * Unit tests
  */
@@ -124,7 +124,8 @@ describe('Student Controller Unit Tests:', function () {
 
 
   afterEach(function (done) {
-    Student.remove().exec();
-    Group.remove().exec(done);
+    Group.remove().exec();
+    Student.remove().exec(done);
   });
 });
+/*eslint-enable*/

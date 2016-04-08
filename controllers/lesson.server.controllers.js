@@ -1,84 +1,87 @@
 import { getErrorMessage } from './core/errors.server.controllers';
 import _ from 'lodash';
 const mongoose = require('mongoose');
-const Group = mongoose.model('Group');
+const Lesson = mongoose.model('Lesson');
 
 
 export function create(req, res) {
-  const group = new Group(req.body);
-  group.save((err) => {
+  const lesson = new Lesson(req.body);
+  lesson.save((err) => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.jsonp(group);
+      res.jsonp(lesson);
     }
   });
 }
 export function list(req, res) {
-  Group.find({})
+  Lesson.find({})
   .sort('-created')
-  .populate('course')
-  .exec((err, groups) => {
+  .populate('lesson_module')
+  .populate('group')
+  .exec((err, lessons) => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.jsonp(groups);
+      res.jsonp(lessons);
     }
   });
 }
 export function read(req, res) {
   // convert mongoose document to JSON
-  const group = req.group ? req.group.toJSON() : {};
-  res.json(group);
+  const lesson = req.lesson ? req.lesson.toJSON() : {};
+  res.json(lesson);
 }
 
 export function del(req, res) {
-  const group = req.group;
+  const lesson = req.lesson;
 
-  group.remove(err => {
+  lesson.remove(err => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.json(group);
+      res.json(lesson);
     }
   });
 }
 
 export function update(req, res) {
-  let group = req.group;
-  group = _.extend(group, req.body);
-  group.save(err => {
+  let lesson = req.lesson;
+  lesson = _.extend(lesson, req.body);
+  lesson.save(err => {
     if (err) {
       res.status(400).send({
         message: getErrorMessage(err),
       });
     } else {
-      res.json(group);
+      res.json(lesson);
     }
   });
 }
-export function groupByID(req, res, next, id) {
+export function lessonByID(req, res, next, id) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     res.status(400).send({
-      message: 'Groupid is invalid',
+      message: 'Lesson id is invalid',
     });
   }
-  Group.findById(id)
-  .exec((err, group) => {
+  Lesson.findById(id)
+  .exec((err, lesson) => {
     if (err) {
       next(err);
-    } else if (!group) {
+    } else if (!lesson) {
       res.status(404).send({
-        message: 'No article with that identifier has been found',
+        message: 'No lesson with that identifier has been found',
       });
     }
-    req.group = group; //eslint-disable-line
+    req.lesson = lesson; //eslint-disable-line
     next();
   });
 }
+// function createLessonsByGroup(group){
+// }

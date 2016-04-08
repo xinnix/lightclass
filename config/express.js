@@ -5,6 +5,8 @@ import studentRoute from '../routes/student.server.routes';
 import groupRoute from '../routes/group.server.routes';
 import lessonModuleRoute from '../routes/lessonModule.server.routes';
 import courseRoute from '../routes/course.server.routes';
+import lessonRoute from '../routes/lesson.server.routes';
+
 
 export default () => {
   const app = express();
@@ -22,6 +24,7 @@ export default () => {
   app.use('/groups', groupRoute);
   app.use('/lessonModules', lessonModuleRoute);
   app.use('/courses', courseRoute);
+  app.use('/lessons', lessonRoute);
 
   return app;
 };
