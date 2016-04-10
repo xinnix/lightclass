@@ -8,6 +8,8 @@ const Course = mongoose.model('Course');
 const LessonModule = mongoose.model('LessonModule');
 const Lesson = mongoose.model('Lesson');
 const Group = mongoose.model('Group');
+const Student = mongoose.model('Student');
+const LessonFeedback = mongoose.model('LessonFeedback');
 
 import express from '../../config/express';
 
@@ -19,14 +21,16 @@ let app;
 let agent;
 let group;
 let course;
+let student;
 let lessonModule1;
 let lessonModule2;
+let lessonFeedback;
 let lesson;
 /**
  * Unit tests
  */
  /*eslint-disable*/
-describe('Lesson Controller Unit Tests:', function () {
+describe('lessonFeedback Controller Unit Tests:', function () {
 
   before(done => {
     app = express();
@@ -35,12 +39,7 @@ describe('Lesson Controller Unit Tests:', function () {
   })
 
   beforeEach(done => {
-    course = new Course({
-      name: '春季课程',
-      lesson_modules: [],
-      period: '春季',
-      memo: '挺好的课',
-    });
+
     lessonModule1 = new LessonModule({
       name: 'Tj',
       period: 'Tj',
@@ -50,24 +49,29 @@ describe('Lesson Controller Unit Tests:', function () {
       homework: Date.now(),
       memo: 'Tj',
     });
-    lessonModule2 = new LessonModule({
-      name: 'Tj1',
-      period: 'Tj1',
-      textbook: 'Tj1',
-      exercise: 'Tj1',
-      test: 'Tj1',
-      homework: Date.now(),
-      memo: 'Tj1',
-    });
+
     group = new Group({
       name: '初三1班',
       type: '12人班',
       master: 'TJ',
     });
-    lesson = {
+    lesson = new Lesson({
+      lesson_module: lessonModule1,
+      group: group,
       date: new Date(2006,0,12),
       process: '未开始',
-    }
+    });
+    student = new Student({
+      student_id: '10000',
+      name: 'full name',
+      gender: 'male',
+      grade: '初三',
+      school: '西工大',
+      phone: '15349216763',
+      birthday: Date.now(),
+      address: '长安中路',
+      password: 'tj',
+    });
     // lessonModule1.save(err => {
     //   lessonModule2.save(err => {
     //     course.lesson_modules.push(lessonModule1);
@@ -80,17 +84,30 @@ describe('Lesson Controller Unit Tests:', function () {
     //     });
     //   });
     // });
+lessonFeedback = {
+  student,
+  lesson,
+  attendance: true,
+  score: 100,
+  resit: 20,
+  perform: '不错',
+  homework: '1,2,3',
+  error_questions: '没问题',
+  teacher_estimation: '老张',
+  instrution: '多学习',
+  additional_tasks: '222',
+}
+
+
+
 lessonModule1.save()
-.then(doc =>{
-  lessonModule2.save();
-}).then(doc =>{
-  course.lesson_modules.push(lessonModule1);
-  course.lesson_modules.push(lessonModule2);
-  course.save();
-}).then(doc=>{
-  group.course = course;
+.then(doc=>{
+
   group.save()
+}).then(doc=>{
+  lesson.save()
 }).then(doc =>{
+  student.save();
   done()
 }).catch(err=>{
   done(err)
@@ -101,24 +118,23 @@ lessonModule1.save()
   });
 
 
-  it('should be able to produce lessons with group', done => {
+  it('should be able to save lessonFeedbacks with lesson', done => {
     this.timeout(10000);
-    lesson.group = group;
-    lesson.lesson_module = group.course.lesson_modules[0];
-    // console.log(lesson);
-    agent.post('/lessons')
-    .send(lesson)
+
+    agent.post('/lessonFeedbacks')
+    .send(lessonFeedback)
     .expect(200)
-    .end((lessonSaveErr, lessonSaveRes) => {
-      if (lessonSaveErr) {
-        return done(lessonSaveErr);
+    .end((lessonFeedbackSaveErr, lessonFeedbackSaveRes) => {
+      if (lessonFeedbackSaveErr) {
+        return done(lessonFeedbackSaveErr);
       }
-      agent.get('/lessons')
+      agent.get('/lessonFeedbacks')
       .expect(200)
-      .end((lessonGetErr, lessonGetRes) => {
-        const lessons = lessonGetRes.body;
-        (lessons[0].lesson_module.name).should.match('Tj');
-        (lessons[0].group.name).should.match('初三1班');
+      .end((lessonFeedbackGetErr, lessonFeedbackGetRes) => {
+        const lessonFeedbacks = lessonFeedbackGetRes.body;
+        (lessonFeedbacks[0].lesson.process).should.match('未开始');
+        (lessonFeedbacks[0].student.name).should.match('full name');
+
         done();
       });
     });
@@ -173,9 +189,10 @@ lessonModule1.save()
 
   afterEach(function (done) {
     LessonModule.remove().exec();
-    Course.remove().exec();
     Group.remove().exec();
-    Lesson.remove().exec(done);
+    Lesson.remove().exec();
+    Student.remove().exec();
+    LessonFeedback.remove().exec(done);
   });
 });
 /*eslint-enable*/

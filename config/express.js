@@ -6,6 +6,7 @@ import groupRoute from '../routes/group.server.routes';
 import lessonModuleRoute from '../routes/lessonModule.server.routes';
 import courseRoute from '../routes/course.server.routes';
 import lessonRoute from '../routes/lesson.server.routes';
+import lessonFeedbackRoute from '../routes/lessonFeedback.server.routes';
 
 
 export default () => {
@@ -25,6 +26,7 @@ export default () => {
   app.use('/lessonModules', lessonModuleRoute);
   app.use('/courses', courseRoute);
   app.use('/lessons', lessonRoute);
+  app.use('/lessonFeedbacks', lessonFeedbackRoute);
 
   return app;
 };

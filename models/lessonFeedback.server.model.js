@@ -24,4 +24,4 @@ const FeedbackSchema = new Schema({
     default: Date.now,
   },
 });
-mongoose.model('Feedback', FeedbackSchema);
+mongoose.model('LessonFeedback', FeedbackSchema);
